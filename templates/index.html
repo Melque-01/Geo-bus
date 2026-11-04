@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{titulo}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="topo">
+        <div class="marca">
+            <span class="selo" aria-hidden="true">GB</span>
+            <h1>Geo Buss</h1>
+        </div>
+        <p class="local">Parauapebas · PA</p>
+    </header>
+
+    <div class="app">
+        <aside class="painel">
+            <section class="bloco">
+                <h2 class="bloco-titulo">Trajeto</h2>
+
+                <div class="pontos">
+                    <div class="ponto">
+                        <span class="ponto-letra" aria-hidden="true">A</span>
+                        <span class="ponto-coord" id="coord-origem">toque no mapa</span>
+                    </div>
+                    <div class="ponto">
+                        <span class="ponto-letra" aria-hidden="true">B</span>
+                        <span class="ponto-coord" id="coord-destino">toque no mapa</span>
+                    </div>
+                </div>
+
+                <div class="acoes">
+                    <button id="btn-rota" class="botao-principal" type="button" disabled>Traçar rota</button>
+                    <button id="btn-inverter" class="botao-icone" type="button" title="Inverter A e B" aria-label="Inverter pontos A e B">⇅</button>
+                    <button id="btn-limpar" class="botao-icone" type="button" title="Limpar" aria-label="Limpar pontos e rota">✕</button>
+                </div>
+
+                <button id="btn-local" class="botao-texto" type="button">Usar minha localização como A</button>
+
+                <p class="dica">Toque no mapa para marcar A e depois B. Arraste um ponto para ajustar.</p>
+                <p id="status" class="status" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="bloco" id="resultado" hidden>
+                <div class="resumo">
+                    <div>
+                        <span class="resumo-rotulo">Distância</span>
+                        <strong id="distancia" class="resumo-valor">—</strong>
+                    </div>
+                    <div>
+                        <span class="resumo-rotulo">Registro</span>
+                        <strong id="registro" class="resumo-valor resumo-valor--fraco">—</strong>
+                    </div>
+                </div>
+
+                <h2 class="bloco-titulo">Tempo por modo</h2>
+                <ul id="placa" class="placa"></ul>
+                <p class="nota">Tempo = distância ÷ velocidade média. Puxe a velocidade de cada modo para simular o trânsito.</p>
+            </section>
+
+            <section class="bloco">
+                <h2 class="bloco-titulo">Rotas salvas</h2>
+                <ul id="historico" class="historico">
+                    <li class="vazio">Nenhuma rota ainda.</li>
+                </ul>
+            </section>
+        </aside>
+
+        <main id="mapa" class="mapa" aria-label="Mapa de Parauapebas"></main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="/static/js/mapa.js" defer></script>
+</body>
+</html>

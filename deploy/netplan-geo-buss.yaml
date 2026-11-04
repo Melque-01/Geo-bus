@@ -1,0 +1,20 @@
+# Geo Buss - configuracao de rede da VM (IP fixo para acesso do professor)
+# Aplicar com: sudo netplan apply
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      match:
+        macaddress: "08:00:27:9d:fb:20"
+      set-name: enp0s3
+      dhcp4: false
+      dhcp6: false
+      mtu: 1400
+      addresses:
+        - 192.168.1.149/24
+      routes:
+        - to: default
+          via: 192.168.1.1
+      nameservers:
+        addresses: [1.1.1.1, 8.8.8.8]

@@ -1,0 +1,20 @@
+[Unit]
+Description=Geo Buss (rotas e tempos)
+After=network-online.target postgresql.service docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USUARIO__
+WorkingDirectory=__DESTINO__
+EnvironmentFile=__DESTINO__/.env
+ExecStart=__DESTINO__/.venv/bin/python app.py
+Restart=always
+RestartSec=3
+# Permite escutar na porta 80 sem rodar como root
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

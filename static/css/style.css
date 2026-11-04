@@ -1,0 +1,577 @@
+/* Geo Buss — painel de rodoviária
+   Paleta: asfalto + âmbar de LED + verde de placa.
+   Tipografia: Barlow Condensed (sinalização), IBM Plex Sans (texto), IBM Plex Mono (dados). */
+
+:root {
+    --asfalto: #14171a;
+    --placa: #1b2025;
+    --placa-alta: #232a30;
+    --linha: #2c343b;
+    --texto: #e9edef;
+    --suave: #a2adb5;
+    --ambar: #f6a821;
+    --ambar-forte: #ffbf4d;
+    --verde: #4fc38a;
+    --erro: #ff6b5e;
+    --mapa-fundo: #eef1f2;
+
+    --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+    --texto-fonte: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --dados: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--asfalto);
+    color: var(--texto);
+    font-family: var(--texto-fonte);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+p,
+ul {
+    margin: 0;
+}
+
+/* ---------- topo ---------- */
+
+.topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 1.1rem;
+    background: var(--asfalto);
+    border-bottom: 1px solid var(--linha);
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+}
+
+.selo {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background: var(--ambar);
+    color: #191200;
+    font-family: var(--display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.marca h1 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.local {
+    font-family: var(--dados);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--suave);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- layout ---------- */
+
+.app {
+    display: grid;
+    grid-template-columns: 372px 1fr;
+    height: calc(100% - 51px);
+}
+
+.painel {
+    overflow-y: auto;
+    padding: 1.1rem 1.1rem 2rem;
+    background: var(--placa);
+    border-right: 1px solid var(--linha);
+    scrollbar-width: thin;
+    scrollbar-color: var(--linha) transparent;
+}
+
+.bloco + .bloco {
+    margin-top: 1.05rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--linha);
+}
+
+.bloco-titulo {
+    font-family: var(--display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--suave);
+    margin-bottom: 0.7rem;
+}
+
+/* ---------- pontos A/B ---------- */
+
+.pontos {
+    display: grid;
+    gap: 0.35rem;
+}
+
+.ponto {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.5rem 0.65rem;
+    background: var(--placa-alta);
+    border: 1px solid var(--linha);
+    border-radius: 5px;
+}
+
+.ponto-letra {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    font-family: var(--display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #191200;
+    background: var(--ambar);
+    flex: none;
+}
+
+.ponto:last-child .ponto-letra {
+    background: var(--verde);
+    color: #04140c;
+}
+
+.ponto-coord {
+    font-family: var(--dados);
+    font-size: 0.8rem;
+    color: var(--suave);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ponto-coord.marcado {
+    color: var(--texto);
+}
+
+/* ---------- botões ---------- */
+
+.acoes {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+}
+
+.botao-principal {
+    flex: 1;
+    padding: 0.68rem 1rem;
+    border: 0;
+    border-radius: 5px;
+    background: var(--ambar);
+    color: #191200;
+    font-family: var(--display);
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 120ms ease, transform 120ms ease;
+}
+
+.botao-principal:hover:not(:disabled) {
+    background: var(--ambar-forte);
+}
+
+.botao-principal:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+.botao-principal:disabled {
+    background: var(--placa-alta);
+    color: var(--suave);
+    cursor: not-allowed;
+}
+
+.botao-icone {
+    width: 42px;
+    border: 1px solid var(--linha);
+    border-radius: 5px;
+    background: var(--placa-alta);
+    color: var(--texto);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 120ms ease, color 120ms ease;
+}
+
+.botao-icone:hover {
+    border-color: var(--ambar);
+    color: var(--ambar);
+}
+
+.botao-texto {
+    margin-top: 0.6rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--suave);
+    font-family: var(--texto-fonte);
+    font-size: 0.82rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.botao-texto:hover {
+    color: var(--ambar);
+}
+
+.dica {
+    margin-top: 0.55rem;
+    color: var(--suave);
+    font-size: 0.78rem;
+    line-height: 1.4;
+}
+
+.status {
+    margin-top: 0.6rem;
+    min-height: 1.2em;
+    font-family: var(--dados);
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+    color: var(--suave);
+}
+
+.status[data-tipo="erro"] {
+    color: var(--erro);
+}
+
+.status[data-tipo="ok"] {
+    color: var(--verde);
+}
+
+/* ---------- resumo ---------- */
+
+.resumo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+}
+
+.resumo-rotulo {
+    display: block;
+    font-family: var(--dados);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--suave);
+}
+
+.resumo-valor {
+    font-family: var(--display);
+    font-size: 1.7rem;
+    font-weight: 600;
+    line-height: 1.15;
+}
+
+.resumo-valor--fraco {
+    color: var(--suave);
+    font-size: 1.2rem;
+}
+
+/* ---------- placa de tempos ---------- */
+
+.placa {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.linha-placa {
+    position: relative;
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.48rem 0.65rem 0.45rem;
+    background: var(--asfalto);
+    border: 1px solid var(--linha);
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    animation: entrar 220ms ease both;
+}
+
+.linha-placa.rapida {
+    border-left-color: var(--verde);
+    background: #101a15;
+}
+
+.linha-topo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.modo {
+    font-family: var(--display);
+    font-size: 1.02rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.tempo {
+    font-family: var(--dados);
+    font-size: 1.18rem;
+    font-weight: 600;
+    color: var(--ambar);
+    font-variant-numeric: tabular-nums;
+}
+
+.linha-placa.rapida .tempo {
+    color: var(--verde);
+}
+
+.modo-grupo {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+}
+
+.selo-rapida {
+    padding: 0.1rem 0.38rem;
+    font-family: var(--dados);
+    font-size: 0.58rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #04140c;
+    background: var(--verde);
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.velocidade {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.velocidade input[type="range"] {
+    flex: 1;
+    height: 16px;
+    accent-color: var(--ambar);
+    cursor: pointer;
+}
+
+.linha-placa.rapida .velocidade input[type="range"] {
+    accent-color: var(--verde);
+}
+
+.kmh {
+    font-family: var(--dados);
+    font-size: 0.72rem;
+    color: var(--suave);
+    min-width: 4.4em;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.nota {
+    margin-top: 0.55rem;
+    font-size: 0.74rem;
+    line-height: 1.4;
+    color: var(--suave);
+}
+
+@keyframes entrar {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- histórico ---------- */
+
+.historico {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+}
+
+.historico li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.historico button {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.42rem 0.55rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: var(--placa-alta);
+    color: var(--texto);
+    font-size: 0.78rem;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 120ms ease;
+}
+
+.historico button:hover,
+.historico button:focus-visible {
+    border-color: var(--ambar);
+}
+
+.historico .hist-meta {
+    font-family: var(--dados);
+    font-size: 0.72rem;
+    color: var(--suave);
+    white-space: nowrap;
+}
+
+.historico .vazio,
+.vazio {
+    color: var(--suave);
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+/* ---------- mapa ---------- */
+
+.mapa {
+    height: 100%;
+    min-height: 360px;
+    background: var(--mapa-fundo);
+}
+
+.leaflet-container {
+    background: var(--mapa-fundo);
+    font-family: var(--texto-fonte);
+}
+
+.leaflet-tooltip.ponto-tooltip {
+    font-family: var(--dados);
+    font-size: 0.72rem;
+    border: 0;
+    border-radius: 3px;
+    background: var(--asfalto);
+    color: var(--texto);
+    box-shadow: none;
+}
+
+.pin {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50% 50% 50% 4px;
+    transform: rotate(-45deg);
+    font-family: var(--display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #191200;
+    background: var(--ambar);
+    border: 2px solid #191200;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.pin b {
+    transform: rotate(45deg);
+    line-height: 1;
+}
+
+.pin--b {
+    background: var(--verde);
+    color: #04140c;
+}
+
+/* ---------- foco e movimento ---------- */
+
+:focus-visible {
+    outline: 2px solid var(--ambar);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 860px) {
+    .app {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .painel {
+        border-right: 0;
+        border-bottom: 1px solid var(--linha);
+    }
+
+    .mapa {
+        height: 45vh;
+        min-height: 250px;
+        order: -1;
+    }
+
+    .topo {
+        padding: 0.55rem 0.9rem;
+        gap: 0.5rem;
+    }
+
+    .marca h1 {
+        font-size: 1.25rem;
+    }
+
+    .local {
+        font-size: 0.6rem;
+        letter-spacing: 0.07em;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 600px) {
+    .leaflet-control-scale {
+        display: none;
+    }
+}
