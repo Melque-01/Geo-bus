@@ -3,6 +3,10 @@
 Rotas em Parauapebas/PA com tempo estimado para **carro, moto, bicicleta e a pé**.
 Python puro (sem framework) + OSRM + PostgreSQL/PostGIS na VM Ubuntu.
 
+![Interface do Geo Buss](docs/preview.png)
+
+*Mapa com pontos A/B, tempo por perfil (com velocidade ajustável) e rotas salvas.*
+
 ## Arquitetura
 
 ```
@@ -121,3 +125,7 @@ Tudo roda na VM: app, frontend, PostGIS e OSRM. De fora, só o IP na porta 80.
   velocidade média. Geometria específica exigiria OSRM extra (`bicycle.lua`, `foot.lua`).
 - **PostGIS guarda o histórico** (`GEOMETRY(Point/LineString, 4326)` + índices GIST),
   pronto para consultas espaciais (rotas por bairro, heatmap, isócronas).
+
+## Licença
+
+[MIT](LICENSE) © 2026 Melquias Reis.
