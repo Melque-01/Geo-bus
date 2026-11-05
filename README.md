@@ -128,4 +128,4 @@ Tudo roda na VM: app, frontend, PostGIS e OSRM. De fora, só o IP na porta 80.
 
 ## Licença
 
-[MIT](LICENSE) © 2026 Melquias Reis.
+[MIT](LICENSE) © 2026 Melque Reis.
