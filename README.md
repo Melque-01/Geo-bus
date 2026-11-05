@@ -3,9 +3,9 @@
 Rotas em Parauapebas/PA com tempo estimado para **carro, moto, bicicleta e a pé**.
 Python puro (sem framework) + OSRM + PostgreSQL/PostGIS na VM Ubuntu.
 
-![Interface do Geo Buss](docs/preview.png)
+![Demonstração do Geo Buss](docs/demo.gif)
 
-*Mapa com pontos A/B, tempo por perfil (com velocidade ajustável) e rotas salvas.*
+*Mapa com pontos A/B, tempo por perfil (velocidade ajustável na hora) e rotas salvas.*
 
 ## Arquitetura
 
