@@ -5,7 +5,8 @@ Python puro (sem framework) + OSRM + PostgreSQL/PostGIS na VM Ubuntu.
 
 ![Demonstração do Geo Buss](docs/demo.gif)
 
-*Mapa com pontos A/B, tempo por perfil (velocidade ajustável na hora) e rotas salvas.*
+*Marcar A e B no mapa, traçar a rota, ajustar a velocidade de cada perfil (tempo
+recalcula na hora) e reabrir uma rota do histórico. [Vídeo em MP4](docs/demo.mp4).*
 
 ## Arquitetura
 
